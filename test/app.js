@@ -17,8 +17,8 @@ describe('generator-nofx-webapp:app', function () {
     assert.file([
       '.editorconfig',
       '.gitignore',
+      '.jshintrc',
       '.bowerrc',
-      '.hgignore',
       '.jsdoc'
     ]);
   });
