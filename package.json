@@ -48,7 +48,8 @@
   "repository": "j-fischer/generator-nofx-webapp",
   "scripts": {
     "prepublish": "gulp prepublish",
-    "test": "gulp"
+    "test": "gulp",
+    "postversion": "git push && git push --tags"
   },
   "license": "MIT"
 }
