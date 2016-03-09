@@ -16,6 +16,19 @@ Then generate your new project:
 yo nofx-webapp
 ```
 
+## Project Overview
+
+This project setup for frontend development is not intended to be used with a major framework (Ember, Angular, etc.), but allows you
+to start out with a minimal set of tools (requirejs, lodash, jQuery, Handlebars, moment.js, log4javascript, i18next) and grow your dependencies
+as you application requires it.
+
+The grunt build script will create a fully optimized build (uglified, concatenated, hashed, etc.) with a single Javascript file. The build also
+replaces requirejs with almond.js to further reduce the foodprint of your dependencies. If you require dynamically loading of dependencies,
+you may have to modify the build process.
+
+Last, the build also creates a full set of project reports including JsDoc, unit test coverage, lists TODO & FIXMEs and creates a
+static source code analysis using plato.
+
 ## Getting To Know Yeoman
 
 Yeoman has a heart of gold. He&#39;s a person with feelings and opinions, but he&#39;s very easy to work with. If you think he&#39;s too opinionated, he can be easily convinced. Feel free to [learn more about him](http://yeoman.io/).
