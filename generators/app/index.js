@@ -1,18 +1,16 @@
 'use strict';
 var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
 
 module.exports = yeoman.generators.Base.extend({
 
-  _copy: function(src, dest) {
+  _copy: function (src, dest) {
     this.fs.copy(
       this.templatePath(src),
       this.destinationPath(dest)
     );
   },
 
-  _copyAndReplace: function(src, dest, context) {
+  _copyAndReplace: function (src, dest, context) {
     this.fs.copyTpl(
       this.templatePath(src),
       this.destinationPath(dest),

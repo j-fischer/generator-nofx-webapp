@@ -1,5 +1,9 @@
 'use strict';
+var os = require('os');
 var path = require('path');
+var fs = require('fs-extra');
+var exec = require('child_process').exec;
+var expect = require('chai').expect;
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-generator').test;
 
@@ -40,22 +44,22 @@ describe('generator-nofx-webapp:run grunt', function () {
     app = helpers
       .run(path.join(__dirname, '../app'))
       .inDir(path.join(os.tmpdir(), './temp-test'), function (dir) {
-
         // Note: Assumes that 'npm install' was run inside the fixtures folder.
         fs.symlinkSync(path.join(__dirname, 'fixtures/node_modules'),
           path.join(dir, 'node_modules'), 'dir');
 
         done();
-    });
+      });
   });
 
-  it ('should pass grunt build', function (done) {
+  it('should pass grunt build', function (done) {
     app
-      .withOptions({ 'skip-install': true })
+      .withOptions({'skip-install': true})
       .on('end', function () {
-        exec('grunt', function (error, stdout, stderr) {
-          if (error)
+        exec('grunt', function (error, stdout) {
+          if (error) {
             console.log('Error: ' + error);
+          }
 
           expect(stdout).to.contain('No problems');
           expect(stdout).to.contain('Executed 1 of 1 SUCCESS');
@@ -63,7 +67,7 @@ describe('generator-nofx-webapp:run grunt', function () {
 
           assert.file(['docs/coverage', 'docs/jsdoc']);
           done();
+        });
       });
-    });
   });
 });
