@@ -1,0 +1,10 @@
+build
+dist
+docs
+node_modules
+.sass-cache
+
+app/bower_components
+app/styles/style.css
+app/styles/style.css.map
+templates-generated.js

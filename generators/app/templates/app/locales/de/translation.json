@@ -1,0 +1,18 @@
+{
+  "introduction": "Dieses Vorlage für eine Web Applikation benutzt aus Prinzip nur eine sehr geringe Anzahl and externen Bibliotheken. Die Intention ist Ihnen eine Grundaustattung zur Verfügung zu stellen, damit Sie die Applikation nach Ihren Bedürfen weiter ausweiten können. Im folgenden werden einige Features aufgelistet:",
+  "features": {
+    "seperation": "Template Engine",
+    "responsiveDesign": "Responsive Webdesign",
+    "internationalization": "Internationalisierung",
+    "buildSupport": "Vollständiger Build Prozess inklusive Unit Tests, Testabdeckung, automatische Dokumentation und Minifizierung"
+  },
+  "librariesInfo": "Die folgenden externen Bibliotheken wurden für diese Applikation ausgewählt:",
+  "libraries": {
+    "lodash": "lodash für seine Listen und Tabellenfunktionen",
+    "jquery": "jQuery für die einfache Veränderung des DOM",
+    "handlebars": "Handlebars als Template Engine",
+    "i18next": "i18next (inklusive Plugins) für die Internationalisierung",
+    "moment": "moment.js für die Bearbeitung von Datum und Uhrzeit, sowie ihrer lokalen Anpassung"
+  },
+  "switchLanguage": "Um diese Seite auf Englisch zu betrachten, klick Sie <a href='/'>hier</a>"
+}

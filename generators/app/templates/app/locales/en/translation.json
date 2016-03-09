@@ -1,0 +1,18 @@
+{
+  "introduction": "This web application template is meant to use only a minimal stack of libraries. The intention is to provide you with a set of tools to get started and let's you grow your stack of libraries with your application. Some of the key features this setup supports out of the box are:",
+  "features": {
+    "seperation": "View templating",
+    "responsiveDesign": "Responsive Designs",
+    "internationalization": "Internationalization",
+    "buildSupport": "Full build support including unit tests, coverage, documentation and minification"
+  },
+  "librariesInfo": "The libraries chosen in this application are:",
+  "libraries": {
+    "lodash": "lodash for it's common list and map functions",
+    "jquery": "jQuery for simple modification of the DOM",
+    "handlebars": "Handlebars for view templating",
+    "i18next": "i18next (plus some plugins) for translations",
+    "moment": "moment.js for the handling of dates and times, and their localizations"
+  },
+  "switchLanguage": "To view this page in German, click <a href='/?lng=de'>here</a>"
+}
