@@ -10,10 +10,14 @@ module.exports = function (grunt) {
   var config = {
       app: 'app',
       test: 'test',
-      artifacts: 'artifacts',
       dist: 'artifacts/dist',
-      build: 'artifacts/build',
-      docs: 'artifacts/docs'
+
+      artifacts: {
+        build: 'artifacts/build',
+        docs: 'artifacts/docs',
+        reports: 'artifacts/reports',
+        root: 'artifacts'
+      }
   };
 
   grunt.initConfig({
@@ -22,9 +26,9 @@ module.exports = function (grunt) {
       clean: {
         // Be careful about the paths you set in here. A simple typo could cause a reference to the root directory.
         // To simulated cleaning tasks, add: options: { 'no-write': true },
-        artifacts: ["<%= config.artifacts %>"],
-        docs: ["<%= config.docs %>"],
-        coverage: ["<%= config.docs %>/coverage"],
+        build: ["<%= config.dist %>", "<%= config.artifacts.build %>"],
+        docs: ["<%= config.artifacts.docs %>"],
+        reports: ["<%= config.artifacts.reports %>"],
         bower: ["<%= config.app %>/bower_components"]
       },
 
@@ -39,8 +43,8 @@ module.exports = function (grunt) {
 
       jshint: {
           options: {
-            jshintrc: '.jshintrc',
-            reporter: require('jshint-stylish')
+            jshintrc: ".jshintrc",
+            reporter: require("jshint-stylish")
           },
           all: [
               'Gruntfile.js',
@@ -67,7 +71,7 @@ module.exports = function (grunt) {
         dist : {
           options: {
             configure: './.jsdoc',
-            destination: '<%= config.docs %>/jsdoc',
+            destination: '<%= config.artifacts.docs %>',
             template: './node_modules/jsdoc-oblivion/template'
           },
           // Note: A markup file can be added as the index page for the documentation.
@@ -79,14 +83,14 @@ module.exports = function (grunt) {
         report: {
           files: {
             // For a historic trend, choose destination outside of artifacts folder.
-            '<%= config.docs %>/plato': ['<%= config.app %>/main.js', '<%= config.app %>/scripts/**/*.js', '<%= config.app %>/config/*.js']
+            '<%= config.artifacts.reports %>/plato': ['<%= config.app %>/main.js', '<%= config.app %>/scripts/**/*.js', '<%= config.app %>/config/*.js']
           }
         }
       },
 
       todo: {
         options: {
-          file: "<%= config.docs %>/todo/todo.md",
+          file: "<%= config.artifacts.reports %>/todo/todo.md",
           marks: [
             {
               name: "FIXME",
@@ -106,12 +110,12 @@ module.exports = function (grunt) {
           ]
         },
         all: [
-          'app/index.html',
-          'app/*.js',
-          'app/config/*.js',
-          'app/sripts/**/*.js',
-          'app/templates/**/*.hbs',
-          'test/**/*.js'
+          '<%= config.app %>/index.html',
+          '<%= config.app %>/*.js',
+          '<%= config.app %>/config/*.js',
+          '<%= config.app %>/sripts/**/*.js',
+          '<%= config.app %>/templates/**/*.hbs',
+          '<%= config.test %>/**/*.js'
         ]
       },
 
@@ -120,13 +124,13 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= config.app %>',
           src: ['config/**', 'scripts/**', '*.js', 'bower_components/**/*.js'],
-          dest: '<%= config.build %>',
+          dest: '<%= config.artifacts.build %>',
           flatten: false
         },
         stageConfigProd: {
           expand: false,
           src: '<%= config.app %>/config/config-data-prod.js',
-          dest: '<%= config.build %>/config/config-data.js',
+          dest: '<%= config.artifacts.build %>/config/config-data.js',
           flatten: false
         },
         distStyles: {
@@ -186,9 +190,9 @@ module.exports = function (grunt) {
       requirejs: {
         options: {
           name: 'bower_components/almond/almond',
-          baseUrl: '<%= config.build %>',
+          baseUrl: '<%= config.artifacts.build %>',
           out: '<%= config.dist %>/main.js',
-          mainConfigFile: '<%= config.build %>/require-config.js',
+          mainConfigFile: '<%= config.artifacts.build %>/require-config.js',
           include: ['main'],
 
           optimizeAllPluginResources : true,
@@ -219,7 +223,55 @@ module.exports = function (grunt) {
 
       karma: {
         options: {
-          configFile: 'karma-conf.js',
+          configFile: 'karma.conf.js',
+
+          // list of files / patterns to load in the browser
+          files: [
+            {pattern: '<%= config.app %>/bower_components/**/*.js', included: false },
+            {pattern: '<%= config.app %>/lib/**/*.js', included: false },
+            {pattern: '<%= config.app %>/*.js', included: false },
+            {pattern: '<%= config.app %>/scripts/**/*.js', included: false },
+            {pattern: '<%= config.test %>/spec/**/*.spec.js', included: false },
+
+            {pattern: 'node_modules/squirejs/src/*.js', included: false },
+            {pattern: 'node_modules/js-mock/dist/*.js', included: false },
+            {pattern: 'node_modules/jshamcrest/**/*.js', included: false },
+
+            '<%= config.test %>/karma.main.js'
+          ],
+
+          // list of files to exclude
+          exclude: [
+            '<%= config.app %>/main.js'
+          ],
+
+          // For code coverage reporting
+          preprocessors: {
+            '<%= config.app %>/scripts/**/*.js': 'coverage'
+          },
+
+          coverageReporter: {
+            reporters: [
+              {
+                type : 'html',
+                dir:'<%= config.artifacts.reports %>/coverage/unit/html'
+              },
+              {
+                type : 'cobertura',
+                dir : '<%= config.artifacts.reports %>/coverage/unit/xml',
+                file: 'cobertura-coverage.xml'
+              },
+              {
+                type: 'text-summary'
+              }
+            ]
+          },
+
+          junitReporter: {
+            outputDir: '<%= config.artifacts.reports %>/junit', // results will be saved as $outputDir/$browserName.xml
+            outputFile: 'test-results.xml',
+            useBrowserName: false
+          }
         },
         unit: {
           singleRun: true,
@@ -229,7 +281,7 @@ module.exports = function (grunt) {
           browsers: ['PhantomJS']
         },
         debug: {
-          configFile: 'karma-conf.js',
+          configFile: 'karma.conf.js',
           browsers: ['Chrome']
         }
       },
@@ -314,30 +366,6 @@ module.exports = function (grunt) {
     grunt.registerTask("bower-install", [ "bower-install-simple" ]);
 
     /*
-     * Build
-     */
-    grunt.registerTask('build', '',
-      function (target) {
-        var tasks = ['clean:artifacts', 'handlebars', 'lint'];
-
-        // copy is required by requirejs
-        tasks.push('copy');
-
-        if (target === 'debug') {
-          tasks.push('requirejs:debug');
-        } else {
-          tasks.push('requirejs:prod');
-        }
-
-        tasks.push('sass');
-        tasks.push('hashres');
-
-
-        grunt.task.run(tasks);
-      }
-    );
-
-    /*
      * Code Verification
      */
     grunt.registerTask('lint', ['jshint']);
@@ -351,7 +379,7 @@ module.exports = function (grunt) {
      * Unit testing
      */
     grunt.registerTask('test', "Runs the unit tests; available options: --watch or --chrome", function() {
-      grunt.task.run("clean:coverage");
+      grunt.task.run("clean:reports");
 
       if (grunt.option("watch")) {
         return grunt.task.run("karma:watch");
@@ -363,6 +391,30 @@ module.exports = function (grunt) {
 
       grunt.task.run("karma:unit");
     });
+
+    /*
+     * Build
+     */
+    grunt.registerTask('build', 'Create the final resources for production',
+      function (target) {
+        var tasks = ['clean:build', 'handlebars', 'lint'];
+
+        // copy is required by requirejs
+        tasks.push('copy');
+
+        if (target === 'debug') {
+          tasks.push('requirejs:debug');
+        } else {
+          tasks.push('requirejs:prod');
+        }
+
+        tasks.push('css');
+        tasks.push('hashres');
+
+
+        grunt.task.run(tasks);
+      }
+    );
 
     /*
      * Run the application in a local server for development. Use --dist to test final build.
@@ -392,6 +444,6 @@ module.exports = function (grunt) {
     /*
      * Setup default task that runs when you just run 'grunt'
      */
-    grunt.registerTask('default', ['bower-install', 'test', 'build', 'jsdoc', 'plato', 'todo']);
+    grunt.registerTask('default', ['bower-install', 'build', 'reports']);
   };
 }());

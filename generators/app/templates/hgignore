@@ -7,5 +7,3 @@ node_modules
 app/bower_components
 app/styles/style.css
 app/styles/style.css.map
-templates-generated.js
-artifacts

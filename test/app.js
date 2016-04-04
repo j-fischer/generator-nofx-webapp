@@ -17,16 +17,21 @@ describe('generator-nofx-webapp:app', function () {
     assert.file([
       '.editorconfig',
       '.gitignore',
+      '.hgignore',
       '.jshintrc',
       '.bowerrc',
-      '.jsdoc'
+      '.jsdoc',
+      'package.json',
+      'bower.json',
+      'Gruntfile.js'
     ]);
   });
 
   it('creates all app and test files', function () {
     assert.file([
       'app',
-      'test'
+      'test',
+      'karma.conf.js'
     ]);
   });
 });

@@ -15,6 +15,7 @@
   "trailing": false,
   "smarttabs": true,
   "globals": {
+    "JsMock": false,
     "define": false,
     "describe": false,
     "it": false,
