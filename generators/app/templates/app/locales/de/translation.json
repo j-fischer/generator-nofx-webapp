@@ -14,5 +14,10 @@
     "i18next": "i18next (inklusive Plugins) für die Internationalisierung",
     "moment": "moment.js für die Bearbeitung von Datum und Uhrzeit, sowie ihrer lokalen Anpassung"
   },
+  "nav": {
+    "home": "Home",
+    "about": "Info",
+    "contact": "Kontakt"
+  },
   "switchLanguage": "Um diese Seite auf Englisch zu betrachten, klick Sie <a href='/'>hier</a>"
 }

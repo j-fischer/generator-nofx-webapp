@@ -2,12 +2,13 @@ define([
   'jquery',
   'moment',
   'templates',
+  'scripts/navigation'
 ],
   /**
    * This is the root module of the application.
    * @module application
    */
-  function($, moment, Templates) {
+  function($, moment, Templates, Navigation) {
     var _id = "application";
     var _defaultTemplate = "application";
 
@@ -18,6 +19,8 @@ define([
       * @function module:application.run
       */
       run: function() {
+        Navigation.init();
+
         var template = Templates[_defaultTemplate];
         $("#" + _id).html(template({
           today: moment().format('LLL')

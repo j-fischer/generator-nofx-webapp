@@ -162,7 +162,7 @@ module.exports = function (grunt) {
         dist: {
           options: {
             loadPath: [
-            "<%= config.app %>/bower_components/bootstrap-sass-official/assets/stylesheets",
+            "<%= config.app %>/bower_components/bootstrap/scss",
             "<%= config.app %>/styles"
             ],
             style: 'compressed'

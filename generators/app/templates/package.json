@@ -35,7 +35,7 @@
     "istanbul": "0.4.1",
     "jit-grunt": "^0.9.1",
     "jquery": "^2.1.4",
-    "js-mock": "0.x",
+    "js-mock": "^1.0.0",
     "jsdoc-oblivion": "0.0.4",
     "jshamcrest": "^0.7.0",
     "jshint-stylish": "2.1.0",

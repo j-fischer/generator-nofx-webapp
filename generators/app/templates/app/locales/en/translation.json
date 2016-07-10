@@ -14,5 +14,10 @@
     "i18next": "i18next (plus some plugins) for translations",
     "moment": "moment.js for the handling of dates and times, and their localizations"
   },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
   "switchLanguage": "To view this page in German, click <a href='/?lng=de'>here</a>"
 }
